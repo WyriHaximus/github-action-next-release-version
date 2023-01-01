@@ -13,5 +13,5 @@ outputs:
   r_version:
     description: 'Next Version (prefixed with r)'
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'main.js'
