@@ -1,0 +1,36 @@
+name: Continuous Integration
+on:
+  push:
+    branches:
+      - 'master'
+  pull_request:
+jobs:
+  get-previous-tag:
+    name: Test Get Previous Tag on ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Required due to the way Git works, without it this action won't be able to find any or the correct tags
+      - name: 'Get Next Release version'
+        id: next-release-version
+        uses: ./
+        with:
+          version: r665
+      - name: Assert Version Output
+        uses: nick-fields/assert-action@v1
+        with:
+          expected: "666"
+          actual: ${{ steps.next-release-version.outputs.version }}
+      - name: Assert R Version Output
+        uses: nick-fields/assert-action@v1
+        with:
+          expected: "r666"
+          actual: ${{ steps.next-release-version.outputs.r_version }}
