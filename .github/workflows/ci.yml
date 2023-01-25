@@ -6,7 +6,7 @@ on:
   pull_request:
 jobs:
   get-previous-tag:
-    name: Test Get Previous Tag on ${{ matrix.os }}
+    name: Test Get Next Release version on ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
