@@ -34,20 +34,22 @@ name: Generate
 jobs:
   generate:
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Required due to the way Git works, without it this action won't be able to find any or the correct tags
       - name: 'Get Previous tag'
         id: previoustag
-        uses: "WyriHaximus/github-action-get-previous-tag@master"
+        uses: "WyriHaximus/github-action-get-previous-tag@v1"
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
       - name: 'Get next minor version'
         id: semvers
-        uses: "WyriHaximus/github-action-next-semvers@master"
+        uses: "WyriHaximus/github-action-next-release-version@v1"
         with:
           version: ${{ steps.previoustag.outputs.tag }}
       - name: 'Create new milestone'
         id: createmilestone
-        uses: "WyriHaximus/github-action-create-milestone@master"
+        uses: "WyriHaximus/github-action-create-milestone@v1"
         with:
           title: ${{ steps.semvers.outputs.r_version }}
         env:
@@ -56,7 +58,7 @@ jobs:
 
 ## License ##
 
-Copyright 2020 [Cees-Jan Kiewiet](http://wyrihaximus.net/)
+Copyright 2023 [Cees-Jan Kiewiet](http://wyrihaximus.net/)
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
