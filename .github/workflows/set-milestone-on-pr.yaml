@@ -21,7 +21,7 @@ jobs:
         if: github.event.pull_request.milestone == null
         id: previousgittag
         continue-on-error: true
-        uses: "WyriHaximus/github-action-get-previous-tag@master"
+        uses: "WyriHaximus/github-action-get-previous-tag@v1"
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
       - run: |
@@ -41,7 +41,7 @@ jobs:
       - name: 'Get next versions'
         if: github.event.pull_request.milestone == null
         id: semvers
-        uses: "WyriHaximus/github-action-next-semvers@master"
+        uses: "WyriHaximus/github-action-next-semvers@v1"
         with:
           version: ${{ steps.previoustag.outputs.tag }}
           strict: false
@@ -83,7 +83,7 @@ jobs:
       - name: 'Create Milestone'
         if: github.event.pull_request.milestone == null && steps.querymilestone.outputs.number == ''
         id: createmilestone
-        uses: "WyriHaximus/github-action-create-milestone@master"
+        uses: "WyriHaximus/github-action-create-milestone@v1"
         with:
           title: ${{ steps.milestone.outputs.milestone }}
         env:
